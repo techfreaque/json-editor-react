@@ -110,11 +110,8 @@ import { Meta } from '@storybook/addon-docs';
 
 ## Sample implementation
 ```jsx dark
- import React, {useMemo} from "react";
-import JsonEditor, {
-    JsonEditorDependencies,
-    useGetJsonEditorsData
-} from "@techfreaque/json-editor-react";
+import React, {useMemo} from "react";
+import JsonEditor, {JsonEditorDependencies, useGetJsonEditorsData} from "@techfreaque/json-editor-react";
 
 // import selected theme and iconlib css
 import "spectre.css/dist/spectre-icons.min.css"
@@ -122,8 +119,8 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 function JsonEditorsExample(props) {
     return (
-      <JsonEditorDependencies>
-        <JsonEditorsExample 
+        <JsonEditorDependencies>
+            <RenderJsonEditorsExample
                 editorName={"Editor-1"}
                 schema={schema} // provide your own schema
 
@@ -164,14 +161,13 @@ function JsonEditorsExample(props) {
                 use_default_values={true}
                 urn_resolver={undefined}
                 use_name_attributes={true}
-                style={undefined}
-        />
-      </JsonEditorDependencies>
-      )
+                style={undefined}/>
+        </JsonEditorDependencies>
+    )
 }
 
-function RenderJsonEditorsExample({editorData}) { 
-    // use useGetJsonEditorsData to get all config values 
+function RenderJsonEditorsExample({editorData}) {
+    // use useGetJsonEditorsData to get all config values
     // from all editors inside of <JsonEditorDependencies>
     const jsonEditorsData = useGetJsonEditorsData();
     function useSaveEditors() {
@@ -181,12 +177,14 @@ function RenderJsonEditorsExample({editorData}) {
     // Here you can implement your own way to render one or multiple <JsonEditor>
     // make sure the <JsonEditor> is rendered outside useMemo
     const renderedEditors = <JsonEditor {...editorData}/>
-    return useMemo(() => (<>
-        <button onClick={useSaveEditors}>Save</button>
-        {renderedEditors} </>), [editorData])
+    return useMemo(() => (
+        <>
+            <button onClick={useSaveEditors}>Save</button>
+            {renderedEditors} </>
+    ), [editorData])
 }
 
-// checkout the docs of the original json-editor for 
+// checkout the docs of the original json-editor for
 // more details about the schema https://github.com/json-editor/json-editor
 const schema = {
     "type": "object",
@@ -701,7 +699,7 @@ const schema = {
     "plural_title": ""
 };
 
-// optional
+// optional starting values
 const startval = {
     "photo": [],
     "person": [],
@@ -722,4 +720,5 @@ const startval = {
         "Num pedestrian casualties": ""
     }
 }
+
  ```
