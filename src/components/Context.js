@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 
 const JsonEditorsContext = createContext();
 const UpdateJsonEditorsContext = createContext();

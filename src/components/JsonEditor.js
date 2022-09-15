@@ -1,6 +1,8 @@
+import React from "react";
 import {useEffect} from "react";
 import {Helmet} from "react-helmet";
 import {JsonEditorsProvider, useJsonEditorsContext, useUpdateJsonEditorsContext} from "./Context";
+import "./JsonEditor.css"
 
 export function JsonEditorDependencies({children}) {
     return (<JsonEditorsProvider>
