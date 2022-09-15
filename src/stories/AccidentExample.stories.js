@@ -1,21 +1,16 @@
 import React from 'react';
-// import { within, userEvent } from '@storybook/testing-library';
-
-import JsonEditors from './AccidentExample';
+import JsonEditorsExample from './AccidentExample';
 import {schema, startval} from './AccidentExample.data';
-
 
 export default {
     title: 'Examples/Accident Example',
-    component: JsonEditors,
-    parameters: { // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
-        layout: 'fullscreen'
+    component: JsonEditorsExample,
+    parameters: { 
     }
 };
 
-const Template = (args) => (<JsonEditors {...args} />);
+const Template = (args) => (<JsonEditorsExample {...args} />);
 
-// More on interaction testing: https://storybook.js.org/docs/react/writing-tests/interaction-testing
 export const AccidentExample = Template.bind({});
 AccidentExample.args = {
     editorName: "Editor-1",
@@ -55,7 +50,6 @@ AccidentExample.args = {
     max_depth: 0,
     use_default_values: true,
     urn_resolver: undefined,
-    use_name_attributes: true
-
-
+    use_name_attributes: true,
+    style: {},
 };

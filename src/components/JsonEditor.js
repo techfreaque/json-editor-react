@@ -182,7 +182,10 @@ JsonEditor.propTypes = {
     urn_resolver: PropTypes.func,
 
     // use_name_attributes 	If true, control inputs name attributes will be set. 	true
-    use_name_attributes: PropTypes.bool
+    use_name_attributes: PropTypes.bool,
+
+    // regular html style
+    style: PropTypes.object
 
 };
 
@@ -214,6 +217,7 @@ JsonEditor.defaultProps = {
     schema: {},
     show_errors: "interaction",
     startval: null,
+    style: {},
     template: "default",
     theme: "html",
     display_required_only: false,

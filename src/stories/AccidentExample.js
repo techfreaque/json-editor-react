@@ -7,14 +7,60 @@ import PropTypes from "prop-types";
 import "spectre.css/dist/spectre-icons.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
+import { schema, startval } from "./AccidentExample.data";
 
-export default function JsonEditors(props) {
+
+export function UseJsonEditorsExample() {
+    return (<JsonEditorsExample 
+                editorName={"Editor-1"}
+                schema={schema} // provide your own schema
+                startval={startval} // provide your own startvalues
+                theme={"bootstrap4"}
+                ajax={false}
+                ajaxBase={undefined}
+                ajaxCredentials={false}
+                ajax_cache_responses={false}
+                ajax_cache_buster={undefined}
+                compact={false}
+                disable_array_add={false}
+                disable_array_delete={false}
+                disable_array_delete_all_rows={false}
+                disable_array_delete_last_row={false}
+                disable_array_reorder={true}
+                enable_array_copy={false}
+                disable_collapse={false}
+                disable_edit_json={false}
+                disable_properties={true}
+                array_controls_top={false}
+                form_name_root={"root"}
+                iconlib={"spectre"}
+                remove_button_labels={false}
+                no_additional_properties={true}
+                refs={{}}
+                required_by_default={false}
+                keep_oneof_values={true}
+                show_errors={"interaction"}
+                template={"default"}
+                display_required_only={false}
+                show_opt_in={false}
+                prompt_before_delete={true}
+                object_layout={"grid"}
+                enum_source_value_auto_select={true}
+                max_depth={0}
+                use_default_values={true}
+                urn_resolver={undefined}
+                use_name_attributes={true}
+                style={undefined}
+    />)
+}
+
+export default function JsonEditorsExample(props) {
     return (<JsonEditorDependencies>
-        <RenderJsonEditors editorData={props}/>
+        <RenderJsonEditorsExample editorData={props}/>
     </JsonEditorDependencies>)
 }
 
-function RenderJsonEditors({editorData}) { // use useGetJsonEditorsData to get all config values from all editors
+function RenderJsonEditorsExample({editorData}) { // use useGetJsonEditorsData to get all config values from all editors
     const jsonEditorsData = useGetJsonEditorsData();
     function useSaveEditors() {
         console.log("editorsData:", jsonEditorsData)
@@ -26,7 +72,7 @@ function RenderJsonEditors({editorData}) { // use useGetJsonEditorsData to get a
         {renderedEditors} </>), [editorData])
 }
 
-JsonEditors.propTypes = {
+JsonEditorsExample.propTypes = {
     // A unique name id that will be used as an id for the parent div (dont use spaces)
     editorName: PropTypes.string.isRequired,
 
@@ -118,6 +164,9 @@ JsonEditors.propTypes = {
 
     // Seed the editor with an initial value. This should be valid against the editor's schema. 	null
     startval: PropTypes.object,
+    
+    // regular html style
+    style: PropTypes.object,
 
     // The JS template engine to use. See the Templates and Variables section below for more info. 	default
     template: PropTypes.oneOf(
@@ -175,7 +224,7 @@ JsonEditors.propTypes = {
 
 };
 
-JsonEditors.defaultProps = {
+JsonEditorsExample.defaultProps = {
     editorName: undefined,
     ajax: false,
     ajaxBase: undefined,
@@ -203,6 +252,7 @@ JsonEditors.defaultProps = {
     schema: {},
     show_errors: "interaction",
     startval: null,
+    style: {},
     template: "default",
     theme: "html",
     display_required_only: false,
