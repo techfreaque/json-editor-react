@@ -4,15 +4,21 @@
         "node": true,
         "jasmine": true
     },
-    "extends": [
-        "airbnb-base", "plugin:react/recommended"
-    ],
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "babelOptions": {
+          "babelrc": false,
+          "configFile": false,
+          // your babel options
+          "presets": ["@babel/preset-env"],
+        },
+      },
     "settings": {
         "import/resolver": {
             "node": {
                 "paths": ["src"],
-                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+                "extensions": [".js", ".jsx", ".ts", ".tsx", ".css"]
             }
         },
         "react": {

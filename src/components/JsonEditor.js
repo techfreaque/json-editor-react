@@ -5,13 +5,15 @@ import {JsonEditorsProvider, useJsonEditorsContext, useUpdateJsonEditorsContext}
 import "./JsonEditor.css"
 
 export function JsonEditorDependencies({children}) {
-    return (<JsonEditorsProvider>
-        <Helmet>
-            <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"/>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/css/jsoneditor.min.css"/>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@latest/dist/spectre-icons.min.css"/>
-        </Helmet>
-        {children} </JsonEditorsProvider>);
+    return (
+        <JsonEditorsProvider>
+            <Helmet>
+                <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/css/jsoneditor.min.css"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@latest/dist/spectre-icons.min.css"/>
+            </Helmet>
+            {children} </JsonEditorsProvider>
+    );
 }
 
 export default function JsonEditor({data, editorName}) {
@@ -55,5 +57,5 @@ export default function JsonEditor({data, editorName}) {
     useEffect(() => {
         data.schema && createEditor(editors[editorName], data);
     }, [data, editorName]);
-    return (<div id={HtmlEditorId}></div>)
+    return <div id={HtmlEditorId}></div>
 }

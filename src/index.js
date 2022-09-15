@@ -1,4 +1,3 @@
-import React from "react";
 import { JsonEditorsProvider, useGetJsonEditorsData, useJsonEditorsContext, useUpdateJsonEditorsContext } from "./components/Context";
 import JsonEditor, {JsonEditorDependencies} from "./components/JsonEditor";
 
