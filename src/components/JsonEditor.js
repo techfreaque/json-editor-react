@@ -22,7 +22,6 @@ export default function JsonEditor(props) {
         }))
     }
     function createEditor(editor, props) {
-        console.log("editor created", props)
         editor instanceof window.JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         setEditor(props.editorName, new window.JSONEditor(editorElement, {

@@ -106,7 +106,7 @@ import { Meta } from '@storybook/addon-docs';
   `}
 </style>
 
-# Welcome json-editor-react
+# Welcome to the json-editor-react docs
 
 ## Sample implementation
 ```jsx dark
@@ -117,7 +117,7 @@ import JsonEditor, {JsonEditorDependencies, useGetJsonEditorsData} from "@techfr
 import "spectre.css/dist/spectre-icons.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-function JsonEditorsExample(props) {
+function JsonEditorsExample() {
     return (
         <JsonEditorDependencies>
             <RenderJsonEditorsExample
@@ -166,7 +166,7 @@ function JsonEditorsExample(props) {
     )
 }
 
-function RenderJsonEditorsExample({editorData}) {
+function RenderJsonEditorsExample(props) {
     // use useGetJsonEditorsData to get all config values
     // from all editors inside of <JsonEditorDependencies>
     const jsonEditorsData = useGetJsonEditorsData();
@@ -176,12 +176,12 @@ function RenderJsonEditorsExample({editorData}) {
 
     // Here you can implement your own way to render one or multiple <JsonEditor>
     // make sure the <JsonEditor> is rendered outside useMemo
-    const renderedEditors = <JsonEditor {...editorData}/>
+    const renderedEditors = <JsonEditor {...props}/>
     return useMemo(() => (
         <>
             <button onClick={useSaveEditors}>Save</button>
             {renderedEditors} </>
-    ), [editorData])
+    ), [props])
 }
 
 // checkout the docs of the original json-editor for

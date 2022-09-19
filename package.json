@@ -1,10 +1,10 @@
 {
   "name": "@techfreaque/json-editor-react",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "React version of the awesome json-editor https://github.com/json-editor/json-editor",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
-  "private":false,
+  "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
