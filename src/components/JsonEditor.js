@@ -6,13 +6,14 @@ import PropTypes from "prop-types";
 
 export default function JsonEditor(props) {
     window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
+    window.JSONEditor = !window.JSONEditor && JSONEditor
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
 
     function createEditor(props) {
         let editor = window.$JsonEditors[props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
-        editor = new JSONEditor(editorElement, { ...props, onChange: undefined })
+        editor = new window.JSONEditor(editorElement, { ...props, onChange: undefined })
         props.onChange && editor.on('change', props.onChange);
         window.$JsonEditors[props.editorName] = editor
     }
