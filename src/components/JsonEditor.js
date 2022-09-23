@@ -1,39 +1,35 @@
 import React from "react";
-import {useEffect} from "react";
-import {JsonEditorsProvider, useJsonEditorsContext, useUpdateJsonEditorsContext} from "./Context";
+import { useEffect } from "react";
 import "./JsonEditor.css"
-import * as JSONEditor from "@json-editor/json-editor"
+import { JSONEditor } from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
 
-export function JsonEditorDependencies({ children }) {
-    window.JSONEditor = JSONEditor.JSONEditor
-    return <JsonEditorsProvider> {children} </JsonEditorsProvider>;
-}
+// export function JsonEditorDependencies({ children }) {
+//     return <JsonEditorsProvider> {children} </JsonEditorsProvider>;
+// }
 
 export default function JsonEditor(props) {
-    const HtmlEditorId = "json-editor-" + props.editorName+Math.random();
-    const setEditors = useUpdateJsonEditorsContext()
-    const editors = useJsonEditorsContext()
+    window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {} 
+    const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
+    const editors = window.$JsonEditors
     function setEditor(tentacleName, newEditor) {
-        setEditors(prevEditors => ({
-            ...prevEditors,
-            [tentacleName]: newEditor
-        }))
+        window.$JsonEditors[tentacleName] = newEditor
     }
     function createEditor(editor, props) {
-        editor instanceof window.JSONEditor && editor.destroy();
+        editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
-        setEditor(props.editorName, new window.JSONEditor(editorElement, {
-            ...props
-        }));
+        setEditor(
+            props.editorName,
+            new JSONEditor(editorElement, { ...props })
+        );
     }
     useEffect(() => {
         props.schema && createEditor(editors[props.editorName], props);
     }, [props]);
     return <div style={
-            props.style
-        }
+        props.style
+    }
         id={HtmlEditorId}></div>
 }
 

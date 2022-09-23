@@ -1,6 +1,5 @@
 import React, {useMemo} from "react";
-import JsonEditor, {JsonEditorDependencies} from "../components/JsonEditor";
-import {useGetJsonEditorsData} from "../components/Context";
+import JsonEditor from "../components/JsonEditor";
 import PropTypes from "prop-types";
 
 // import selected theme and iconlib css
@@ -59,26 +58,18 @@ export function UseJsonEditorsExample() {
     )
 }
 
-export default function JsonEditorsExample(props) {
-    return (
-        <JsonEditorDependencies>
-            <RenderJsonEditorsExample editorData={props}/>
-        </JsonEditorDependencies>
-    )
-}
-
-function RenderJsonEditorsExample({editorData}) { // use useGetJsonEditorsData to get all config values from all editors
-    const jsonEditorsData = useGetJsonEditorsData();
-    function useSaveEditors() {
+export default function JsonEditorsExample(props) { // use window.$JsonEditors to get all config values from all editors
+    const jsonEditorsData = window.$JsonEditors
+    function saveEditors() {
         console.log("editorsData:", jsonEditorsData)
     };
-    const renderedEditors = <JsonEditor {...editorData}/>
+    const renderedEditors = <JsonEditor {...props}/>
 
     return useMemo(() => (
         <>
-            <button onClick={useSaveEditors}>Save</button>
+            <button onClick={saveEditors}>Save</button>
             {renderedEditors} </>
-    ), [editorData])
+    ), [props])
 }
 
 JsonEditorsExample.propTypes = {

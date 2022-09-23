@@ -111,7 +111,7 @@ import { Meta } from '@storybook/addon-docs';
 ## Sample implementation
 ```jsx dark
 import React, {useMemo} from "react";
-import JsonEditor, {JsonEditorDependencies, useGetJsonEditorsData} from "@techfreaque/json-editor-react";
+import JsonEditor from "@techfreaque/json-editor-react";
 
 // import selected theme and iconlib css
 import "spectre.css/dist/spectre-icons.min.css"
@@ -119,58 +119,55 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 function JsonEditorsExample() {
     return (
-        <JsonEditorDependencies>
-            <RenderJsonEditorsExample
-                editorName={"Editor-1"}
-                schema={schema} // provide your own schema
+        <RenderJsonEditorsExample
+            editorName={"Editor-1"}
+            schema={schema} // provide your own schema
 
-                // optional
-                startval={startval} // provide your own startvalues
-                theme={"bootstrap4"}
-                ajax={false}
-                ajaxBase={undefined}
-                ajaxCredentials={false}
-                ajax_cache_responses={false}
-                ajax_cache_buster={undefined}
-                compact={false}
-                disable_array_add={false}
-                disable_array_delete={false}
-                disable_array_delete_all_rows={false}
-                disable_array_delete_last_row={false}
-                disable_array_reorder={true}
-                enable_array_copy={false}
-                disable_collapse={false}
-                disable_edit_json={false}
-                disable_properties={true}
-                array_controls_top={false}
-                form_name_root={"root"}
-                iconlib={"spectre"}
-                remove_button_labels={false}
-                no_additional_properties={true}
-                refs={{}}
-                required_by_default={false}
-                keep_oneof_values={true}
-                show_errors={"interaction"}
-                template={"default"}
-                display_required_only={false}
-                show_opt_in={false}
-                prompt_before_delete={true}
-                object_layout={"grid"}
-                enum_source_value_auto_select={true}
-                max_depth={0}
-                use_default_values={true}
-                urn_resolver={undefined}
-                use_name_attributes={true}
-                style={undefined}/>
-        </JsonEditorDependencies>
+            // optional
+            startval={startval} // provide your own startvalues
+            theme={"bootstrap4"}
+            ajax={false}
+            ajaxBase={undefined}
+            ajaxCredentials={false}
+            ajax_cache_responses={false}
+            ajax_cache_buster={undefined}
+            compact={false}
+            disable_array_add={false}
+            disable_array_delete={false}
+            disable_array_delete_all_rows={false}
+            disable_array_delete_last_row={false}
+            disable_array_reorder={true}
+            enable_array_copy={false}
+            disable_collapse={false}
+            disable_edit_json={false}
+            disable_properties={true}
+            array_controls_top={false}
+            form_name_root={"root"}
+            iconlib={"spectre"}
+            remove_button_labels={false}
+            no_additional_properties={true}
+            refs={{}}
+            required_by_default={false}
+            keep_oneof_values={true}
+            show_errors={"interaction"}
+            template={"default"}
+            display_required_only={false}
+            show_opt_in={false}
+            prompt_before_delete={true}
+            object_layout={"grid"}
+            enum_source_value_auto_select={true}
+            max_depth={0}
+            use_default_values={true}
+            urn_resolver={undefined}
+            use_name_attributes={true}
+            style={undefined}/>
     )
 }
 
 function RenderJsonEditorsExample(props) {
-    // use useGetJsonEditorsData to get all config values
-    // from all editors inside of <JsonEditorDependencies>
-    const jsonEditorsData = useGetJsonEditorsData();
+    // use window.$JsonEditors to get all config values from all editors
     function useSaveEditors() {
+        const jsonEditorsData = window.$JsonEditors
         console.log("editorsData:", jsonEditorsData)
     };
 
