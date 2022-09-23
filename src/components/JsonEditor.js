@@ -4,39 +4,26 @@ import "./JsonEditor.css"
 import { JSONEditor } from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
-
-// export function JsonEditorDependencies({ children }) {
-//     return <JsonEditorsProvider> {children} </JsonEditorsProvider>;
-// }
-
 export default function JsonEditor(props) {
-    window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {} 
+    window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
-    const editors = window.$JsonEditors
-    function setEditor(tentacleName, newEditor, onChange) {
-        onChange && newEditor.on('change', () => {
-            onChange()
-        });
-        window.$JsonEditors[tentacleName] = newEditor
-    }
-    function createEditor(editor, props) {
+
+    function createEditor(props) {
+        const editor = window.$JsonEditors[props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
-        setEditor(
-            props.editorName,
-            new JSONEditor(editorElement, { ...props },
-            props.onChange)
-        );
+        editor = new JSONEditor(editorElement, { ...props, onChange: undefined })
+        onChange && editor.on('change', onChange);
+        window.$JsonEditors[props.editorName] = editor
     }
     useEffect(() => {
-        props.schema && createEditor(editors[props.editorName], props);
+        props.schema && createEditor(props);
     }, [props]);
     return <div style={
         props.style
     }
         id={HtmlEditorId}></div>
 }
-
 
 JsonEditor.propTypes = {
     // A unique name id that will be used as an id for the parent div (dont use spaces)
@@ -226,6 +213,7 @@ JsonEditor.defaultProps = {
     show_opt_in: false,
     prompt_before_delete: true,
     object_layout: "normal",
+    onChange: undefined,
     enum_source_value_auto_select: true,
     max_depth: 0,
     use_default_values: true,
