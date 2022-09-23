@@ -9,11 +9,11 @@ export default function JsonEditor(props) {
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
 
     function createEditor(props) {
-        const editor = window.$JsonEditors[props.editorName]
+        let editor = window.$JsonEditors[props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         editor = new JSONEditor(editorElement, { ...props, onChange: undefined })
-        onChange && editor.on('change', onChange);
+        props.onChange && editor.on('change', props.onChange);
         window.$JsonEditors[props.editorName] = editor
     }
     useEffect(() => {

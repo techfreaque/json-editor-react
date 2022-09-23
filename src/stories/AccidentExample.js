@@ -64,7 +64,7 @@ export default function JsonEditorsExample(props) {
         // access each editor by its name
         const editor = window.$JsonEditors["Editor-1"] 
         const editorValues = editor.getValue();
-        console.log("editorsData:", editorValues)
+        console.log("editorsData Saved:", editorValues)
     };
 
     function changeSomething() {
