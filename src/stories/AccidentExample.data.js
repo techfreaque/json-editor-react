@@ -1,3 +1,6 @@
+// checkout the docs of the original json-editor for
+// more details about the schema https://github.com/json-editor/json-editor
+
 export const schema = {
     "type": "object",
     "title": "Accident Example",

@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import JsonEditor from "../components/JsonEditor";
 import PropTypes from "prop-types";
 
@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import "spectre.css/dist/spectre-icons.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import {schema, startval} from "./AccidentExample.data";
+import { schema, startval } from "./AccidentExample.data";
 
 
 export function UseJsonEditorsExample() {
@@ -14,7 +14,7 @@ export function UseJsonEditorsExample() {
         <JsonEditorsExample
             editorName={"Editor-1"}
             schema={schema} // provide your own schema
-        
+
             // optional
             startval={startval} // provide your own startvalues
             theme={"bootstrap4"}
@@ -54,16 +54,29 @@ export function UseJsonEditorsExample() {
             use_default_values={true}
             urn_resolver={undefined}
             use_name_attributes={true}
-            style={undefined}/>
+            style={undefined} />
     )
 }
 
-export default function JsonEditorsExample(props) { // use window.$JsonEditors to get all config values from all editors
-    const jsonEditorsData = window.$JsonEditors
+export default function JsonEditorsExample(props) {
     function saveEditors() {
-        console.log("editorsData:", jsonEditorsData)
+        // use window.$JsonEditors to get all config values from all editors
+        // access each editor by its name
+        const editor = window.$JsonEditors["Editor-1"] 
+        const editorValues = editor.getValue();
+        console.log("editorsData:", editorValues)
     };
-    const renderedEditors = <JsonEditor {...props}/>
+
+    function changeSomething() {
+        // access each editor by its name
+        const editor = window.$JsonEditors["Editor-1"] 
+        editor.setValue({"accidentDetails": {"Severity": "Fatal"}});
+
+    }
+
+    // Here you can implement your own way to render one or multiple <JsonEditor>
+    // make sure the <JsonEditor> is rendered outside useMemo
+    const renderedEditors = <JsonEditor {...props} onChange={saveEditors} />
 
     return useMemo(() => (
         <>
@@ -206,6 +219,9 @@ JsonEditorsExample.propTypes = {
     object_layout: PropTypes.oneOf(
         ["normal", "table", "grid"]
     ),
+
+    // Pass a function that gets triggered when editor data changes
+    onChange: PropTypes.func,
 
     // Preserve value at Move Up or Down.(No value is selected automatically upon deletion.) 	true
     enum_source_value_auto_select: PropTypes.bool,

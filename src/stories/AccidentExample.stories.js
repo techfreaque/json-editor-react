@@ -46,6 +46,7 @@ AccidentExample.args = {
     show_opt_in: false,
     prompt_before_delete: true,
     object_layout: "grid",
+    onChange: undefined,
     enum_source_value_auto_select: true,
     max_depth: 0,
     use_default_values: true,

@@ -165,18 +165,27 @@ function JsonEditorsExample() {
 }
 
 function RenderJsonEditorsExample(props) {
-    // use window.$JsonEditors to get all config values from all editors
-    function useSaveEditors() {
-        const jsonEditorsData = window.$JsonEditors
-        console.log("editorsData:", jsonEditorsData)
+    function saveEditors() {
+        // use window.$JsonEditors to get all config values from all editors
+        // access each editor by its name
+        const editor = window.$JsonEditors["Editor-1"] 
+        const editorValues = editor.getValue();
+        console.log("editorsData:", editorValues)
     };
+
+    function changeSomething() {
+        // access each editor by its name
+        const editor = window.$JsonEditors["Editor-1"] 
+        editor.setValue({"accidentDetails": {"Severity": "Fatal"}});
+    }
 
     // Here you can implement your own way to render one or multiple <JsonEditor>
     // make sure the <JsonEditor> is rendered outside useMemo
-    const renderedEditors = <JsonEditor {...props}/>
+    const renderedEditors = <JsonEditor {...props} onChange={saveEditors} />
+
     return useMemo(() => (
         <>
-            <button onClick={useSaveEditors}>Save</button>
+            <button onClick={saveEditors}>Save</button>
             {renderedEditors} </>
     ), [props])
 }

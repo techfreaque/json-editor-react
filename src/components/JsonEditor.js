@@ -13,7 +13,10 @@ export default function JsonEditor(props) {
     window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {} 
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
     const editors = window.$JsonEditors
-    function setEditor(tentacleName, newEditor) {
+    function setEditor(tentacleName, newEditor, onChange) {
+        onChange && newEditor.on('change', () => {
+            onChange()
+        });
         window.$JsonEditors[tentacleName] = newEditor
     }
     function createEditor(editor, props) {
@@ -21,7 +24,8 @@ export default function JsonEditor(props) {
         const editorElement = document.getElementById(HtmlEditorId)
         setEditor(
             props.editorName,
-            new JSONEditor(editorElement, { ...props })
+            new JSONEditor(editorElement, { ...props },
+            props.onChange)
         );
     }
     useEffect(() => {
@@ -163,6 +167,9 @@ JsonEditor.propTypes = {
 
     // The default value of `format` for objects. If set to table for example, objects will use table layout if `format` is not specified. 	normal
     object_layout: PropTypes.oneOf(["normal", "table", "grid"]),
+
+    // Pass a function that gets triggered when editor data changes
+    onChange: PropTypes.func,
 
     // Preserve value at Move Up or Down.(No value is selected automatically upon deletion.) 	true
     enum_source_value_auto_select: PropTypes.bool,
