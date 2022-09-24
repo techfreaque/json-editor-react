@@ -62,15 +62,15 @@ export default function JsonEditorsExample(props) {
     function saveEditors() {
         // use window.$JsonEditors to get all config values from all editors
         // access each editor by its name
-        const editor = window.$JsonEditors["Editor-1"] 
+        const editor = window.$JsonEditors["Editor-1"]
         const editorValues = editor.getValue();
         console.log("editorsData Saved:", editorValues)
     };
 
     function changeSomething() {
         // access each editor by its name
-        const editor = window.$JsonEditors["Editor-1"] 
-        editor.setValue({"accidentDetails": {"Severity": "Fatal"}});
+        const editor = window.$JsonEditors["Editor-1"]
+        editor.setValue({ "accidentDetails": { "Severity": "Fatal" } });
 
     }
 
@@ -211,6 +211,12 @@ JsonEditorsExample.propTypes = {
 
     // If true, NON required properties will have an extra toggable checkbox near the title that determines if the value must be included or not in the editor´s value 	false
     show_opt_in: PropTypes.bool,
+
+    // Pass an object containing callback template function
+    // "testCallbackFunction": (jseditor, e) => {
+    //     return e.test * 1000;
+    // }
+    templateCallbacks: PropTypes.object,
 
     // If true, displays a dialog box with a confirmation message before node deletion. 	true
     prompt_before_delete: PropTypes.bool,

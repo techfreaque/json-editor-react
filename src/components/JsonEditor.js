@@ -6,14 +6,34 @@ import PropTypes from "prop-types";
 
 export default function JsonEditor(props) {
     window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
-    window.JSONEditor = !window.JSONEditor && JSONEditor
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
 
     function createEditor(props) {
         let editor = window.$JsonEditors[props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
-        editor = new window.JSONEditor(editorElement, { ...props, onChange: undefined })
+        if (props.templateCallbacks) {
+            JSONEditor.defaults.callbacks.template = {
+                ...JSONEditor.defaults.callbacks.template,
+                ...props.templateCallbacks
+            }
+        }
+        if (props.customThemes) {
+            props.customThemes.forEach(theme => {
+                JSONEditor.defaults.themes[theme.name] = theme.theme;
+            })
+        }
+        if (props.editorsArray) {
+            JSONEditor.defaults.editors.array = props.editorsArray;
+        }
+        editor = new JSONEditor(
+            editorElement,
+            {
+                ...props,
+                // remove custom props
+                onChange: undefined, templateCallbacks: undefined,
+                customThemes: undefined, editorsArray: undefined
+            })
         props.onChange && editor.on('change', props.onChange);
         window.$JsonEditors[props.editorName] = editor
     }
@@ -149,6 +169,12 @@ JsonEditor.propTypes = {
 
     // If true, NON required properties will have an extra toggable checkbox near the title that determines if the value must be included or not in the editor´s value 	false
     show_opt_in: PropTypes.bool,
+
+    // Pass an object containing callback template function
+    // "testCallbackFunction": (jseditor, e) => {
+    //     return e.test * 1000;
+    // }
+    templateCallbacks: PropTypes.object,
 
     // If true, displays a dialog box with a confirmation message before node deletion. 	true
     prompt_before_delete: PropTypes.bool,
