@@ -5,11 +5,16 @@ import { JSONEditor } from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
 export default function JsonEditor(props) {
-    window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
 
     function createEditor(props) {
-        let editor = window.$JsonEditors[props.editorName]
+        let editorStorages
+        if (props.editorStorages) {
+            editorStorages = props.editorStorages
+        } else {
+            editorStorages = window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
+        }
+        let editor = editorStorages[props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         if (props.templateCallbacks) {
@@ -49,6 +54,9 @@ export default function JsonEditor(props) {
 JsonEditor.propTypes = {
     // A unique name id that will be used as an id for the parent div (dont use spaces)
     editorName: PropTypes.string.isRequired,
+
+    // A object to store editors into
+    editorStorages: PropTypes.object,
 
     // If true, JSON Editor will load external URLs in $ref via ajax. 	false
     ajax: PropTypes.bool,
