@@ -8,13 +8,9 @@ export default function JsonEditor(props) {
     const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
 
     function createEditor(props) {
-        let editorStorages
-        if (props.editorStorages) {
-            editorStorages = props.editorStorages
-        } else {
-            editorStorages = window.$JsonEditors = window.$JsonEditors ? window.$JsonEditors : {}
-        }
-        let editor = editorStorages[props.editorName]
+        const storageName = props.storageName ? "$" + props.storageName : "$JsonEditors"
+        window[storageName] = window[storageName] ? window[storageName] : {}
+        let editor = window[storageName][props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         if (props.templateCallbacks) {
@@ -37,10 +33,12 @@ export default function JsonEditor(props) {
                 ...props,
                 // remove custom props
                 onChange: undefined, templateCallbacks: undefined,
-                customThemes: undefined, editorsArray: undefined
+                customThemes: undefined, editorsArray: undefined,
+                // startval: undefined
             })
+
         props.onChange && editor.on('change', props.onChange);
-        window.$JsonEditors[props.editorName] = editor
+        window[storageName][props.editorName] = editor
     }
     useEffect(() => {
         props.schema && createEditor(props);
@@ -55,8 +53,8 @@ JsonEditor.propTypes = {
     // A unique name id that will be used as an id for the parent div (dont use spaces)
     editorName: PropTypes.string.isRequired,
 
-    // A object to store editors into
-    editorStorages: PropTypes.object,
+    // A name of the storge variable on window
+    storageName: PropTypes.string,
 
     // If true, JSON Editor will load external URLs in $ref via ajax. 	false
     ajax: PropTypes.bool,
