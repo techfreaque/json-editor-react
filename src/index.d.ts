@@ -1,5 +1,5 @@
-import JsonEditor, { JsonEditorDependencies } from "./components/JsonEditor";
+import JsonEditor from "./components/JsonEditor";
 export default JsonEditor;
 import { useJsonEditorsContext, useUpdateJsonEditorsContext,
     useGetJsonEditorsData, JsonEditorsProvider } from "./components/Context";
-export { JsonEditorDependencies, useJsonEditorsContext, useUpdateJsonEditorsContext, useGetJsonEditorsData, JsonEditorsProvider };
+export { useJsonEditorsContext, useUpdateJsonEditorsContext, useGetJsonEditorsData, JsonEditorsProvider };

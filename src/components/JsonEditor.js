@@ -1,14 +1,31 @@
-import React from "react";
-import { useEffect } from "react";
+import React, {useCallback, useMemo, useState} from "react";
+import {useEffect} from "react";
 import "./JsonEditor.css"
-import { JSONEditor } from "@json-editor/json-editor"
+import {JSONEditor} from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
 export default function JsonEditor(props) {
-    const HtmlEditorId = "json-editor-" + props.editorName + Math.random();
-
+    const HtmlEditorId = `json-editor-${
+        props.editorName
+    }${
+        Math.random()
+    }`;
+    const storageName = props.storageName ? `$${
+        props.storageName
+    }` : "$JsonEditors"
+    const [didRunOnce, setDidRunOnce] = useState(false)
+    const handleOnChange = useCallback(() => {
+        let didRunOnce = false
+        function onChange() {
+            if (didRunOnce) {
+                props.onChange()
+            } else {
+                didRunOnce = true;
+            }
+        }
+        window[storageName][props.editorName].on('change', onChange);
+    }, [didRunOnce, setDidRunOnce, props.onChange])
     function createEditor(props) {
-        const storageName = props.storageName ? "$" + props.storageName : "$JsonEditors"
         window[storageName] = window[storageName] ? window[storageName] : {}
         let editor = window[storageName][props.editorName]
         editor instanceof JSONEditor && editor.destroy();
@@ -16,7 +33,7 @@ export default function JsonEditor(props) {
         if (props.templateCallbacks) {
             JSONEditor.defaults.callbacks.template = {
                 ...JSONEditor.defaults.callbacks.template,
-                ...props.templateCallbacks
+                ... props.templateCallbacks
             }
         }
         if (props.customThemes) {
@@ -27,26 +44,40 @@ export default function JsonEditor(props) {
         if (props.editorsArray) {
             JSONEditor.defaults.editors.array = props.editorsArray;
         }
-        editor = new JSONEditor(
-            editorElement,
-            {
-                ...props,
-                // remove custom props
-                onChange: undefined, templateCallbacks: undefined,
-                customThemes: undefined, editorsArray: undefined,
-                // startval: undefined
-            })
+        if (props.language) {
+            JSONEditor.defaults.language = props.language;
+        }
+        if (props.languages) {
+            JSONEditor.defaults.languages = {
+                ...JSONEditor.defaults.languages,
+                ... props.languages
+            };
+        }
+        editor = new JSONEditor(editorElement, {
+            ... props,
+            // remove custom props
+            onChange: undefined,
+            templateCallbacks: undefined,
+            customThemes: undefined,
+            editorsArray: undefined,
+            // startval: undefined
+        })
 
-        props.onChange && editor.on('change', props.onChange);
         window[storageName][props.editorName] = editor
+        handleOnChange()
     }
+
+
     useEffect(() => {
-        props.schema && createEditor(props);
+        if (props.schema) {
+            createEditor(props);
+        }
     }, [props]);
     return <div style={
         props.style
     }
-        id={HtmlEditorId}></div>
+        className="json-editor"
+        id={HtmlEditorId} />
 }
 
 JsonEditor.propTypes = {
@@ -55,6 +86,12 @@ JsonEditor.propTypes = {
 
     // A name of the storge variable on window
     storageName: PropTypes.string,
+
+    // Allows you to change the language  default: "en"
+    language: PropTypes.string,
+
+    // provide translated key values
+    languages: PropTypes.object,
 
     // If true, JSON Editor will load external URLs in $ref via ajax. 	false
     ajax: PropTypes.bool,
@@ -186,7 +223,9 @@ JsonEditor.propTypes = {
     prompt_before_delete: PropTypes.bool,
 
     // The default value of `format` for objects. If set to table for example, objects will use table layout if `format` is not specified. 	normal
-    object_layout: PropTypes.oneOf(["normal", "table", "grid"]),
+    object_layout: PropTypes.oneOf(
+        ["normal", "table", "grid"]
+    ),
 
     // Pass a function that gets triggered when editor data changes
     onChange: PropTypes.func,
@@ -241,6 +280,7 @@ JsonEditor.defaultProps = {
     startval: null,
     style: {},
     template: "default",
+    language: "en",
     theme: "html",
     display_required_only: false,
     show_opt_in: false,
