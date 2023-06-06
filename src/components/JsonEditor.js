@@ -5,7 +5,6 @@ import {JSONEditor} from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
 
-
 export default function JsonEditor(props) {
     const storageName = props.storageName ? `$${
         props.storageName
@@ -22,11 +21,7 @@ export default function JsonEditor(props) {
             }
         }
         window[storageName][props.editorName].on('change', onChange);
-    }, [
-        props.onChange,
-        storageName,
-        props.editorName
-    ])
+    }, [props.onChange, storageName, props.editorName])
     function createEditor(props) {
         if (!window[storageName]) {
             window[storageName] = {}
@@ -37,7 +32,7 @@ export default function JsonEditor(props) {
         if (props.templateCallbacks) {
             JSONEditor.defaults.callbacks.template = {
                 ...JSONEditor.defaults.callbacks.template,
-                ... props.templateCallbacks
+                ...props.templateCallbacks
             }
         }
         if (props.customThemes) {
@@ -54,11 +49,11 @@ export default function JsonEditor(props) {
         if (props.languages) {
             JSONEditor.defaults.languages = {
                 ...JSONEditor.defaults.languages,
-                ... props.languages
+                ...props.languages
             };
         }
         editor = new JSONEditor(editorElement, {
-            ... props,
+            ...props,
             // remove custom props
             onChange: undefined,
             templateCallbacks: undefined,
@@ -70,7 +65,7 @@ export default function JsonEditor(props) {
     }
     useEffect(() => {
         if (props.schema) {
-            if (window[storageName]?.[props.editorName]) {
+            if (window[storageName]?.[props.editorName] && JSON.stringify(window[storageName][props.editorName].schema) === JSON.stringify(props.schema)) {
                 window[storageName][props.editorName].didRunOnce = false
                 window[storageName][props.editorName].setValue(props.startval)
             } else {
@@ -78,11 +73,13 @@ export default function JsonEditor(props) {
             }
         }
     }, [props]);
-    return useMemo(() => (<div style={
-        props.style
-    }
-        className="json-editor"
-        id={HtmlEditorId} />), [HtmlEditorId, props.style])
+    return useMemo(() => (
+        <div style={
+                props.style
+            }
+            className="json-editor"
+            id={HtmlEditorId}/>
+    ), [HtmlEditorId, props.style])
 }
 
 JsonEditor.propTypes = {
