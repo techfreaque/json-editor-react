@@ -1,11 +1,12 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useMemo} from "react";
 import {useEffect} from "react";
 import "./JsonEditor.css"
 import {JSONEditor} from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
+
+
 export default function JsonEditor(props) {
-    const [didRunOnce, setDidRunOnce] = useState(false)
     const storageName = props.storageName ? `$${
         props.storageName
     }` : "$JsonEditors"
@@ -13,18 +14,15 @@ export default function JsonEditor(props) {
         props.editorName
     }`;
     const handleOnChange = useCallback(() => {
-        let didRunOnce = false
         function onChange() {
-            if (didRunOnce) {
+            if (window[storageName]?.[props.editorName]?.didRunOnce) {
                 props.onChange()
             } else {
-                didRunOnce = true;
+                window[storageName][props.editorName].didRunOnce = true
             }
         }
         window[storageName][props.editorName].on('change', onChange);
     }, [
-        didRunOnce,
-        setDidRunOnce,
         props.onChange,
         storageName,
         props.editorName
@@ -72,7 +70,8 @@ export default function JsonEditor(props) {
     }
     useEffect(() => {
         if (props.schema) {
-            if (window[storageName] ?. [props.editorName]) {
+            if (window[storageName]?.[props.editorName]) {
+                window[storageName][props.editorName].didRunOnce = false
                 window[storageName][props.editorName].setValue(props.startval)
             } else {
                 createEditor(props);
