@@ -1,6 +1,6 @@
 {
   "name": "@techfreaque/json-editor-react",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "description": "React version of the awesome json-editor https://github.com/json-editor/json-editor",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
@@ -10,7 +10,8 @@
     "build": "webpack --mode production",
     "lint": "eslint --report-unused-disable-directives src",
     "fix": "eslint --fix --report-unused-disable-directives src",
-    "release": "npm run build && build-storybook -o docs && npm publish --access public",
+    "release": "npm run build && npm publish --access public",
+    "release-with-book": "npm run build && build-storybook -o docs && npm publish --access public",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs"
   },

@@ -5,15 +5,15 @@ import {JSONEditor} from "@json-editor/json-editor"
 import PropTypes from "prop-types";
 
 export default function JsonEditor(props) {
-    const HtmlEditorId = `json-editor-${
-        props.editorName
-    }${
-        Math.random()
-    }`;
+    const [didRunOnce, setDidRunOnce] = useState(false)
     const storageName = props.storageName ? `$${
         props.storageName
     }` : "$JsonEditors"
-    const [didRunOnce, setDidRunOnce] = useState(false)
+    const HtmlEditorId = `json-editor-${storageName}-${
+        props.editorName
+    }`;
+    window[storageName] = window[storageName] ? window[storageName] : {}
+    let editor = window[storageName][props.editorName]
     const handleOnChange = useCallback(() => {
         let didRunOnce = false
         function onChange() {
@@ -26,8 +26,6 @@ export default function JsonEditor(props) {
         window[storageName][props.editorName].on('change', onChange);
     }, [didRunOnce, setDidRunOnce, props.onChange])
     function createEditor(props) {
-        window[storageName] = window[storageName] ? window[storageName] : {}
-        let editor = window[storageName][props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         if (props.templateCallbacks) {
@@ -59,25 +57,25 @@ export default function JsonEditor(props) {
             onChange: undefined,
             templateCallbacks: undefined,
             customThemes: undefined,
-            editorsArray: undefined,
-            // startval: undefined
+            editorsArray: undefined
         })
-
         window[storageName][props.editorName] = editor
         handleOnChange()
     }
-
-
     useEffect(() => {
         if (props.schema) {
-            createEditor(props);
+            if (editor) {
+                editor.setValue(props.startval)
+            } else {
+                createEditor(props);
+            }
         }
     }, [props]);
-    return <div style={
+    return useMemo(() => (<div style={
         props.style
     }
         className="json-editor"
-        id={HtmlEditorId} />
+        id={HtmlEditorId} />), [HtmlEditorId, props.style])
 }
 
 JsonEditor.propTypes = {
