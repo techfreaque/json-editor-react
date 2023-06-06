@@ -12,8 +12,6 @@ export default function JsonEditor(props) {
     const HtmlEditorId = `json-editor-${storageName}-${
         props.editorName
     }`;
-    window[storageName] = window[storageName] ? window[storageName] : {}
-    let editor = window[storageName][props.editorName]
     const handleOnChange = useCallback(() => {
         let didRunOnce = false
         function onChange() {
@@ -24,8 +22,18 @@ export default function JsonEditor(props) {
             }
         }
         window[storageName][props.editorName].on('change', onChange);
-    }, [didRunOnce, setDidRunOnce, props.onChange])
+    }, [
+        didRunOnce,
+        setDidRunOnce,
+        props.onChange,
+        storageName,
+        props.editorName
+    ])
     function createEditor(props) {
+        if (!window[storageName]) {
+            window[storageName] = {}
+        }
+        let editor = window[storageName][props.editorName]
         editor instanceof JSONEditor && editor.destroy();
         const editorElement = document.getElementById(HtmlEditorId)
         if (props.templateCallbacks) {
@@ -64,8 +72,8 @@ export default function JsonEditor(props) {
     }
     useEffect(() => {
         if (props.schema) {
-            if (editor) {
-                editor.setValue(props.startval)
+            if (window[storageName] ?. [props.editorName]) {
+                window[storageName][props.editorName].setValue(props.startval)
             } else {
                 createEditor(props);
             }
