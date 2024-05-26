@@ -1,3 +1,7 @@
 .card.card-body.bg-light {
     background-color: unset !important;
 }
+
+.select2-container--open {
+    z-index: 10000;
+}

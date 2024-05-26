@@ -1,6 +1,6 @@
 {
   "name": "@techfreaque/json-editor-react",
-  "version": "1.4.13",
+  "version": "1.4.14",
   "description": "React version of the awesome json-editor https://github.com/json-editor/json-editor",
   "main": "dist/index.js",
   "files": [
