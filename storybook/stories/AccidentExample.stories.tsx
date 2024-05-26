@@ -1,4 +1,3 @@
-import React from 'react';
 import JsonEditorsExample from './AccidentExample';
 import {schema, startval} from './AccidentExample.data';
 

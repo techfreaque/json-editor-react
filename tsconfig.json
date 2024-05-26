@@ -1,0 +1,55 @@
+{
+  "include": [
+    "src",
+  ],
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "module": "commonjs" /* Specify what module code is generated. */,
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+    "outDir": "dist",
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "strict": true /* Enable all strict type-checking options. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ],
+    "rootDirs": [
+      "./src",
+    ],
+    // // Strict Checks
+    // "alwaysStrict": true,
+    // "noImplicitAny": true,
+    // "strictNullChecks": true,
+    // "useUnknownInCatchVariables": true,
+    // "strictPropertyInitialization": true,
+    // "strictFunctionTypes": true,
+    // "noImplicitThis": true,
+    // "strictBindCallApply": true,
+    // "noPropertyAccessFromIndexSignature": true,
+    // "noUncheckedIndexedAccess": true,
+    // "exactOptionalPropertyTypes": true,
+    // // Linter Checks
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "forceConsistentCasingInFileNames": true,
+    // // https://eslint.org/docs/rules/consistent-return ?
+    // "noFallthroughCasesInSwitch": true,
+    // // https://eslint.org/docs/rules/no-fallthrough
+    // "noUnusedLocals": true,
+    // // https://eslint.org/docs/rules/no-unused-vars
+    // "noUnusedParameters": true,
+    // // https://eslint.org/docs/rules/no-unused-vars#args
+    // "allowUnreachableCode": false,
+    // // https://eslint.org/docs/rules/no-unreachable ?
+    // "allowUnusedLabels": false,
+    // // https://eslint.org/docs/rules/no-unused-labels
+    // // Base Strict Checks
+    // "noImplicitUseStrict": false,
+    // "suppressExcessPropertyErrors": false,
+    // "suppressImplicitAnyIndexErrors": false,
+    // "noStrictGenericChecks": false
+  }
+}
