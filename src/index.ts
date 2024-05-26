@@ -1,4 +1,24 @@
 import JsonEditor from "./components/JsonEditor";
+import {
+    JsonEditorWindow,
+    JsonEditorType,
+    JsonEditorProps,
+    JSONEditorOptions,
+    JSONEditorError,
+    JSONEditorObjectOptions,
+    JSONEditorArrayOptions,
+    JSONEditorTheme
+} from "./components/JsonEditor";
 
-export { default as JsonEditor } from "./components/JsonEditor";
+export {
+    JsonEditorWindow,
+    JsonEditorType,
+    JsonEditorProps,
+    JSONEditorOptions,
+    JSONEditorError,
+    JSONEditorObjectOptions,
+    JSONEditorArrayOptions,
+    JSONEditorTheme
+};
+
 export default JsonEditor;

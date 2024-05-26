@@ -4,7 +4,7 @@ import "./JsonEditor.css";
 import "select2/dist/css/select2.min.css";
 import { JSONEditor } from "@json-editor/json-editor";
 
-export default function JsonEditor<TStartValueType extends any | undefined, TSchemaType extends any>(
+export default function JsonEditor<TStartValueType, TSchemaType>(
   props: JsonEditorProps<TStartValueType, TSchemaType>
 ) {
   const storageName: string = props.storageName
