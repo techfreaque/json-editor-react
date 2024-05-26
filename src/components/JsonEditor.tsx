@@ -105,12 +105,12 @@ class OctaneTheme extends JSONEditor.defaults.themes.bootstrap4 {
   }
   override getCheckbox() {
     const el = this.getFormInputField("checkbox");
-    el.classList.add("custom-control-input");
+    el.classList.add("form-check-input");
     return el;
   }
   override getCheckboxLabel(text: HTMLElement) {
     const el = this.getFormInputLabel(text);
-    el.classList.add("custom-control-label");
+    el.classList.add("form-check-label");
     return el;
   }
   override getFormControl(
@@ -120,7 +120,7 @@ class OctaneTheme extends JSONEditor.defaults.themes.bootstrap4 {
   ) {
     const group = document.createElement("div");
     if (label && input.type === "checkbox") {
-      group.classList.add("checkbox", "custom-control", "custom-switch");
+      group.classList.add("form-check", "form-switch");
       group.appendChild(input);
       group.appendChild(label);
     } else {
