@@ -96,8 +96,8 @@ export default function JsonEditor<TStartValueType, TSchemaType>(
 }
 
 // custom octane theme
-class OctaneTheme extends JSONEditor.defaults.themes.bootstrap4 {
-  override getButton(text: HTMLElement, icon: HTMLElement, title: HTMLElement) {
+class OctaneTheme extends JSONEditor.defaults.themes.bootstrap5 {
+  override getButton(text: HTMLElement, icon: HTMLElement, title: string) {
     const el = super.getButton(text, icon, title);
     el.classList.remove("btn-secondary");
     el.classList.add("btn-sm", "btn-primary", "waves-effect");
@@ -433,6 +433,8 @@ export type JSONEditorOptions<TValue, TSchema> = {
   | "html"
   | "bootstrap2"
   | "bootstrap3"
+  | "bootstrap4"
+  | "bootstrap5"
   | "octane"
   | "bootstrap4"
   | "foundation3"
@@ -509,7 +511,7 @@ export declare class JSONEditorTheme {
   public getButton(
       text: HTMLElement,
       icon: HTMLElement,
-      title: HTMLElement
+      title: string
   ): HTMLElement;
   public getCheckbox(): HTMLElement;
   public getCheckboxLabel(text: HTMLElement): HTMLElement;
@@ -543,6 +545,7 @@ declare class JSONEditorClass<TValue, TSchema> {
       >;
       themes: {
           bootstrap4: typeof JSONEditorTheme;
+          bootstrap5: typeof JSONEditorTheme;
           octane: typeof JSONEditorTheme;
           [theme: string]: typeof JSONEditorTheme;
       };

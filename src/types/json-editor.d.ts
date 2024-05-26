@@ -165,7 +165,7 @@ declare class JSONEditorTheme {
     public getButton(
         text: HTMLElement,
         icon: HTMLElement,
-        title: HTMLElement
+        title: string
     ): HTMLElement;
     public getCheckbox(): HTMLElement;
     public getCheckboxLabel(text: HTMLElement): HTMLElement;
@@ -199,6 +199,7 @@ declare class JSONEditor<TValue, TSchema> {
         >;
         themes: {
             bootstrap4: typeof JSONEditorTheme;
+            bootstrap5: typeof JSONEditorTheme;
             octane: typeof JSONEditorTheme;
             [theme: string]: typeof JSONEditorTheme;
         };
