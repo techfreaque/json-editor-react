@@ -342,7 +342,7 @@ const defaultProps: JsonEditorProps<any, any> = {
 
 JsonEditor.defaultProps = defaultProps;
 
-type JSONEditorOptions<TValue, TSchema> = {
+export type JSONEditorOptions<TValue, TSchema> = {
   /**
    * If true, JSON Editor will load external URLs in $ref via ajax.
    */
@@ -450,12 +450,12 @@ type JSONEditorOptions<TValue, TSchema> = {
 
   object_layout?: "normal" | "table" | "grid" | undefined;
 };
-type JSONEditorError = {
+export type JSONEditorError = {
   path: string;
   property: string;
   message: string;
 };
-type JSONEditorObjectOptions = {
+export type JSONEditorObjectOptions = {
   /**
    * If set to true, the editor will start collapsed
    */
@@ -473,7 +473,7 @@ type JSONEditorObjectOptions = {
    */
   disable_properties?: boolean | undefined;
 };
-type JSONEditorArrayOptions = {
+export type JSONEditorArrayOptions = {
   /**
    * If set to true, the editor will start collapsed
    */
@@ -504,7 +504,7 @@ type JSONEditorArrayOptions = {
   disable_collapse?: boolean | undefined;
 };
 
-declare class JSONEditorTheme {
+export declare class JSONEditorTheme {
   constructor();
   public getButton(
       text: HTMLElement,
